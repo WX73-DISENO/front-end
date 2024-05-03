@@ -33,7 +33,8 @@ export class SigninComponent {
 
   login(){
     console.log(this.selectedUserType, this.contrasena, this.correo_electronico);
-    if(this.selectedUserType == 'keeper'){this.keepersService.authenticate(this.correo_electronico, this.contrasena).subscribe({
+    if(this.selectedUserType == 'keeper'){
+      this.keepersService.authenticate(this.correo_electronico, this.contrasena).subscribe({
       next: (result) => {
         if (result.success) {
           console.log('Usuario autenticado', result.user, result.user.id);

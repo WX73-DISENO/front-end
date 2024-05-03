@@ -12,6 +12,8 @@ export class KeepersService extends BaseService<keepers>{
     this.resourceEndpoint = '/keepers';
   }
 
+  lastID: any;
+
   baseUrl = 'http://localhost:3000/keepers';
 
   private userIdSource = new BehaviorSubject<string | null>(null);
@@ -47,5 +49,17 @@ export class KeepersService extends BaseService<keepers>{
         }
       })
     );
+  }
+
+  registerKeeper(keeper: keepers) {
+    return this.http.post(`${this.baseUrl}`, keeper);
+  }
+
+  getKeepers() {
+    return this.http.get<keepers[]>(`${this.baseUrl}`);
+  }
+
+  updateKeeper(keeper: keepers) {
+    return this.http.put(`${this.baseUrl}/${keeper.id}`, keeper);
   }
 }
