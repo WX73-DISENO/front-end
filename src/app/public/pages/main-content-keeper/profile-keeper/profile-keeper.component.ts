@@ -16,6 +16,7 @@ export class ProfileKeeperComponent implements OnInit{
   city: string;
   description: string;
   email: string;
+  photoUrl: string;
   userId = this.keepersService.userId$;
 
   constructor(private router: Router, private dialog: MatDialog, private keepersService: KeepersService) {
@@ -24,6 +25,7 @@ export class ProfileKeeperComponent implements OnInit{
     this.city = '';
     this.description = '';
     this.email = '';
+    this.photoUrl = '';
   }
 
   goToKeeper() {
@@ -55,6 +57,7 @@ export class ProfileKeeperComponent implements OnInit{
           this.city = result.user.city;
           this.description = result.user.description;
           this.email = result.user.email;
+          this.photoUrl = result.user.photoUrl;
         } else {
           console.log('Error al obtener el usuario');
         }
