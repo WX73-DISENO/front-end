@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  serverBasePath: 'http://localhost:3000'
+  serverBasePath: 'https://fake-api-kappa-eight.vercel.app'
 }
