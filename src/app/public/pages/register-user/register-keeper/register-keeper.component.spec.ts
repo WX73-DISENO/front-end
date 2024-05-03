@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import { Router } from '@angular/router';
+import {MatInputModule} from "@angular/material/input";
 
 describe('RegisterKeeperComponent', () => {
   let component: RegisterKeeperComponent;
@@ -23,6 +24,7 @@ describe('RegisterKeeperComponent', () => {
         MatToolbarModule,
         MatCardModule,
         MatFormFieldModule,
+        MatInputModule
       ],
       providers: [
         { provide: KeepersService, useValue: mockKeepersService }
