@@ -9,6 +9,9 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { FormsModule } from '@angular/forms';
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -16,7 +19,7 @@ describe('SigninComponent', () => {
   let mockKeepersService: jasmine.SpyObj<KeepersService>;
 
   beforeEach(() => {
-    mockKeepersService = jasmine.createSpyObj(['authenticate']);
+    mockKeepersService = jasmine.createSpyObj(['authenticate', 'setUserId']);
 
     TestBed.configureTestingModule({
       declarations: [SigninComponent],
@@ -28,7 +31,10 @@ describe('SigninComponent', () => {
         MatCardModule,
         MatFormFieldModule,
         HttpClientTestingModule,
-        FormsModule
+        FormsModule,
+        MatInputModule,
+        MatSelectModule,
+        NoopAnimationsModule
       ]
     });
 

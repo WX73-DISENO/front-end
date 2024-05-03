@@ -92,7 +92,6 @@ describe('KeepersService', () => {
 
   it('should get all keepers', () => {
     const mockKeepers: keepers[] = [
-      // ... your keepers data here ...
     ];
 
     service.getKeepers().subscribe(keepers => {
