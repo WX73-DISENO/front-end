@@ -73,11 +73,15 @@ export class FindKeeperComponent implements OnInit{
   }
 
   ngOnInit() {
-    // Obtén todos los keepers al iniciar el componente
+    console.log('Calling getAll');
     this.keeperService.getAll().subscribe((response: any) => {
+      console.log('Response received', response);
       this.keepers = response;
+    }, error => {
+      console.error('Error:', error);
     });
   }
+
   goToTraveler(){
     this.router.navigateByUrl('/home-traveller');
   }

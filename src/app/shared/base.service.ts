@@ -30,8 +30,8 @@ export class BaseService<T> {
     return throwError(()=>new Error(`Something happend with request, please try again later.`));
   }
 
-  getAll(): Observable<T> {
-    return this.http.get<T>(this.resourcePath(), this.httpOptions)
+  getAll(): Observable<T[]> {
+    return this.http.get<T[]>(this.resourcePath(), this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 }
