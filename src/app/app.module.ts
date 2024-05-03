@@ -30,9 +30,10 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatSortModule} from "@angular/material/sort";
 import { SigninComponent } from './public/pages/signin/signin.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +72,9 @@ import { SigninComponent } from './public/pages/signin/signin.component';
     MatDialogModule,
     MatGridListModule,
     MatDividerModule
+  ],
+  exports: [
+    RegisterKeeperComponent // Si necesitas exportar este componente
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import {KeepersService} from "../../../services/keepers.service";
 import {keepers} from "../../../model/keepers";
 import {coerceStringArray} from "@angular/cdk/coercion";
 
+
 @Component({
   selector: 'app-register-keeper',
   templateUrl: './register-keeper.component.html',
@@ -52,11 +53,14 @@ export class RegisterKeeperComponent {
         this.router.navigateByUrl('/login');
       },
       error: (error) => {
-        console.log('Error al registrar', error.error.message);
+        if (error.error) {
+          console.log('Error al registrar', error.error.message);
+        } else {
+          console.log('Error al registrar', error);
+        }
       }
     });
   }
-
 
   signOut() {
     localStorage.removeItem('currentUser');

@@ -24,6 +24,12 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
+    files: [
+      './src/**/*.spec.ts', // All spec files
+      './src/app/**/*.ts', // All spec files
+      './src/app/app.module.ts'
+
+    ],
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/learning-center'),
       subdir: '.',
