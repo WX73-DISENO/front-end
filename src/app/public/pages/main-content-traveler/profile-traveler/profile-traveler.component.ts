@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {UpdateProfileComponent} from "../../update-profile/update-profile.component";
 import {formatDate} from "@angular/common";
 import {TravellersService} from "../../../services/travellers.service";
+import {Travellers} from "../../../model/travellers";
 
 @Component({
   selector: 'app-profile-traveler',
@@ -75,6 +76,55 @@ export class ProfileTravelerComponent implements OnInit{
     });
   }
 
+  updateProfile(name: string, lastName: string, birthdate: Date, phone: string, email: string): void {
+    this.travellersService.userId$.subscribe(userId => {
+      if (userId) {
+        this.travellersService.getTraveller(userId).subscribe({
+          next: (result) => {
+            if (result.success) {
+
+              if(name === '') {
+                name = result.user.name;
+              }
+              if(lastName === '') {
+                lastName = result.user.lastName;
+              }
+              if(birthdate === null) {
+                birthdate = result.user.birthdate;
+              }
+              if(phone === '') {
+                phone = result.user.phone;
+              }
+              if(email === '') {
+                email = result.user.email;
+              }
+              const traveller = new Travellers(result.user.id, name, lastName, birthdate, phone, email, result.user.password);
+              this.travellersService.updateTraveller(traveller).subscribe({
+                next: (result) => {
+                  if (result) {
+                    console.log('Usuario actualizado');
+                  } else {
+                    console.log('Error al actualizar el usuario');
+                  }
+                },
+                error: (err) => {
+                  console.error('Error updating keeper:', err);
+                }
+              });
+            } else {
+              console.log('Error al obtener el usuario');
+            }
+          },
+          error: (err) => {
+            console.error('Error fetching keeper details:', err);
+          }
+        });
+      } else {
+        console.log('User ID not available');
+      }
+    });
+  }
+
   openUpdateDialog(): void {
     const formattedBirthdate = this.getFormattedBirthdate();
     const dialogRef = this.dialog.open(UpdateProfileComponent, {
@@ -89,6 +139,8 @@ export class ProfileTravelerComponent implements OnInit{
         this.birthdate = result.birthdate;
         this.phone = result.phone;
         this.email = result.email;
+
+        this.updateProfile(result.name, result.lastName, result.birthdate, result.phone, result.email);
       }
     });
   }

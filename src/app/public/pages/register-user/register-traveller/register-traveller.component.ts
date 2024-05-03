@@ -12,7 +12,7 @@ export class RegisterTravellerComponent {
   id = 0;
   name = '';
   lastName= '';
-  birthdate = '';
+  birthdate = new Date();
   phone = '';
   email = '';
   password = '';
