@@ -333,7 +333,7 @@
   ],
   "travellers": [
     {
-      "id_traveller": "wadsdasdazx324234",
+      "id": 1,
       "name": "John",
       "lastName": "Doe",
       "birthdate": "1990-05-15",
@@ -343,7 +343,7 @@
       "photoUrl": "https://i.imgur.com/m0Y7vuI.jpeg"
     },
     {
-      "id_traveller": "178236era",
+      "id": 2,
       "name": "Alice",
       "lastName": "Smith",
       "birthdate": "1985-09-20",
@@ -353,7 +353,7 @@
       "photoUrl": "https://i.imgur.com/m0Y7vuI.jpeg"
     },
     {
-      "id_traveller": "1287fvdasd",
+      "id": 3,
       "name": "Carlos",
       "lastName": "González",
       "birthdate": "1988-03-10",
@@ -361,6 +361,16 @@
       "email": "carlos.gonzalez@example.com",
       "password": "secreto123",
       "photoUrl": "https://i.imgur.com/m0Y7vuI.jpeg"
+    },
+    {
+      "id": 4,
+      "name": "Carls",
+      "lastName": "Avellaneda",
+      "birthdate": "3221-02-21",
+      "phone": 123123123,
+      "email": "charlyavellaneda@hotmail.com",
+      "password": "123",
+      "photoUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135768.png"
     }
   ]
 }

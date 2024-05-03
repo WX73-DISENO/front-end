@@ -1,27 +1,28 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateProfileComponent} from "../../update-profile/update-profile.component";
 import {formatDate} from "@angular/common";
+import {TravellersService} from "../../../services/travellers.service";
 
 @Component({
   selector: 'app-profile-traveler',
   templateUrl: './profile-traveler.component.html',
   styleUrls: ['./profile-traveler.component.css']
 })
-export class ProfileTravelerComponent {
+export class ProfileTravelerComponent implements OnInit{
   name: string;
   lastName: string;
   birthdate: Date;
   phone: string;
   email: string;
 
-  constructor(private router: Router, private dialog: MatDialog) {
-    this.name = 'Alejandro';
-    this.lastName = 'Soto';
-    this.birthdate = new Date(2002, 1, 28);
-    this.phone = '959458748';
-    this.email = 'ale12@gmail.com';
+  constructor(private router: Router, private dialog: MatDialog, private travellersService: TravellersService) {
+    this.name = '';
+    this.lastName = '';
+    this.birthdate = new Date();
+    this.phone = '';
+    this.email = '';
   }
 
   getFormattedBirthdate(): string {
@@ -42,6 +43,36 @@ export class ProfileTravelerComponent {
 
   goToProfile(){
     this.router.navigateByUrl('/profile-traveler');
+  }
+
+  ngOnInit(): void {
+    this.travellersService.userId$.subscribe(userId => {
+      if (userId) {
+        this.loadTravellerDetails(userId);
+      } else {
+        console.log('User ID not available');
+      }
+    });
+  }
+
+  private loadTravellerDetails(userId: string) {
+    this.travellersService.getTraveller(userId).subscribe({
+      next: (result) => {
+        if (result.success) {
+          this.name = result.user.name;
+          this.lastName = result.user.lastName;
+          this.birthdate = result.user.birthdate;
+          this.phone = result.user.phone;
+          this.email = result.user.email;
+
+        } else {
+          console.log('Error al obtener el usuario');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching keeper details:', err);
+      }
+    });
   }
 
   openUpdateDialog(): void {
