@@ -33,23 +33,23 @@ export class FindHouseComponent implements OnInit{
 
   onFilter(){
     var filteredHouses = [...this.Houses];
-    if (this.pais) {
+    if (this.pais !== '') {
       filteredHouses = filteredHouses.filter(house => house.country.toLowerCase().includes(this.pais.toLowerCase()));
     }
-    if (this.ciudad) {
+    if (this.ciudad !== '') {
       filteredHouses = filteredHouses.filter(house => house.city.toLowerCase().includes(this.ciudad.toLowerCase()));
     }
-    if (this.direccion){
+    if (this.direccion !== ''){
       filteredHouses = filteredHouses.filter(house => house.streetAddress.toLowerCase().includes(this.direccion.toLowerCase()));
     }
-    if (this.precio !== null && this.precio !== undefined) {
+    if (this.precio !== 0 && this.precio !== undefined) {
       const precioFormateado = `$${this.precio}`;
       filteredHouses = filteredHouses.filter(house => house.price.toString() === precioFormateado);
     }
-    if (this.capacidad) {
+    if (this.capacidad !== 0 && this.capacidad !== undefined) {
       filteredHouses = filteredHouses.filter(house => house.capacity == this.capacidad);
     }
-    if (this.estrellas) {
+    if (this.estrellas !== 0 && this.estrellas !== undefined) {
       filteredHouses = filteredHouses.filter(house => house.rating == this.estrellas);
     }
     this.Houses = filteredHouses;
