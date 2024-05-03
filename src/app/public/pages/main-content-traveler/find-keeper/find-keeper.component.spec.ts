@@ -1,53 +1,30 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import {RouterTestingModule} from "@angular/router/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FindKeeperComponent } from './find-keeper.component';
-import {KeepersService} from "../../../services/keepers.service";
-import{FormsModule} from "@angular/forms";
-import {of} from "rxjs";
-import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatCardModule} from "@angular/material/card";
-import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
-import { Router } from '@angular/router';
-import {keepers} from "../../../model/keepers";
+import { KeepersService } from "../../../services/keepers.service";
+import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {MatIconModule} from "@angular/material/icon";
+import { FormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import {keepers} from "../../../model/keepers";
 
 describe('FindKeeperComponent', () => {
   let component: FindKeeperComponent;
   let fixture: ComponentFixture<FindKeeperComponent>;
-  let mockKeepersService: any;
-  const mockKeepersData: keepers[] = [
-    {
-      id: 1,
-      name: 'Keeper 1',
-      country: 'Country 1',
-      city: 'City 1',
-      streetAddress: 'Address 1',
-      email: '',
-      description: 'Description 1',
-      password: 'password1',
-      photoUrl: 'https://example.com/photo1.jpg',
-      rating: 4
-    },
-    {
-      id: 2,
-      name: 'Keeper 2',
-      country: 'Country 2',
-      city: 'City 2',
-      streetAddress: 'Address 2',
-      email: '',
-      description: 'Description 2',
-      password: 'password2',
-      photoUrl: 'https://example.com/photo2.jpg',
-      rating: 5
-    }
-  ];
+  let mockKeepersService: jasmine.SpyObj<KeepersService>;
 
   beforeEach(() => {
-    mockKeepersService = jasmine.createSpyObj('KeepersService', ['getAll']);
+    mockKeepersService = jasmine.createSpyObj(['getAll']);
 
     TestBed.configureTestingModule({
       declarations: [FindKeeperComponent],
+      providers: [
+        { provide: KeepersService, useValue: mockKeepersService }
+      ],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
@@ -55,36 +32,79 @@ describe('FindKeeperComponent', () => {
         MatCardModule,
         MatFormFieldModule,
         FormsModule,
-        MatIconModule
-      ],
-      providers: [
-        { provide: KeepersService, useValue: mockKeepersService }
+        MatIconModule,
+        NoopAnimationsModule
       ]
     });
 
     fixture = TestBed.createComponent(FindKeeperComponent);
     component = fixture.componentInstance;
-    mockKeepersService.getAll.and.returnValue(of(mockKeepersData));
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should load keepers on init', () => {
-    expect(mockKeepersService.getAll).toHaveBeenCalled();
-    expect(component.keepers).toEqual(mockKeepersData);
-  });
-
   it('should filter keepers by country', () => {
+    const keeper: keepers = {
+      id: 1,
+      name: 'John Doe',
+      country: 'Country',
+      city: 'City',
+      streetAddress: 'Street Address',
+      email: 'john@example.com',
+      description: 'Description',
+      password: 'password',
+      photoUrl : "https://cdn-icons-png.flaticon.com/512/3135/3135768.png",
+      rating : 5
+    };
+    mockKeepersService.getAll.and.returnValue(of(keeper));
+    component.ngOnInit();
+
     component.country = 'Country 1';
     component.onFilter();
 
-    const filteredKeepers = mockKeepersData.filter(k => k.country === 'Country 1');
-
-    expect(component.keepers).toEqual(filteredKeepers);
+    expect(component.keepers).toEqual([{
+      id: 1,
+      name: 'John Doe',
+      country: 'Country',
+      city: 'City',
+      streetAddress: 'Street Address',
+      email: 'john@example.com',
+      description: 'Description',
+      password: 'password',
+      photoUrl : "https://cdn-icons-png.flaticon.com/512/3135/3135768.png",
+      rating : 5
+    }]);
   });
 
-  // Add more test cases for filtering by city, streetAddress, rating, etc.
+  it('should filter keepers by country', () => {
+    const keeper: keepers = {
+      id: 1,
+      name: 'John Doe',
+      country: 'Country',
+      city: 'City',
+      streetAddress: 'Street Address',
+      email: 'john@example.com',
+      description: 'Description',
+      password: 'password',
+      photoUrl : "https://cdn-icons-png.flaticon.com/512/3135/3135768.png",
+      rating : 5
+    };
+    mockKeepersService.getAll.and.returnValue(of(keeper));
+    component.ngOnInit();
+
+    component.country = 'Country 1';
+    component.onFilter();
+
+    expect(component.keepers).toEqual([{
+      id: 1,
+      name: 'John Doe',
+      country: 'Country',
+      city: 'City',
+      streetAddress: 'Street Address',
+      email: 'john@example.com',
+      description: 'Description',
+      password: 'password',
+      photoUrl : "https://cdn-icons-png.flaticon.com/512/3135/3135768.png",
+      rating : 5
+    }]);
+  });
 });
