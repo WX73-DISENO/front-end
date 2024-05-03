@@ -39,7 +39,7 @@ describe('KeepersService', () => {
       expect(keeper).toEqual(mockKeeper);
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/keepers');
+    const req = httpMock.expectOne('https://fake-api-kappa-eight.vercel.app/keepers');
     expect(req.request.method).toBe('POST');
     req.flush(mockKeeper);
   });
@@ -62,7 +62,7 @@ describe('KeepersService', () => {
       expect(keeper).toEqual({ success: true, user: mockKeeper });
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/keepers?id=1');
+    const req = httpMock.expectOne('https://fake-api-kappa-eight.vercel.app/keepers?id=1');
     expect(req.request.method).toBe('GET');
     req.flush([mockKeeper]);
   });
@@ -85,7 +85,7 @@ describe('KeepersService', () => {
       expect(keeper).toEqual(mockKeeper);
     });
 
-    const req = httpMock.expectOne(`http://localhost:3000/keepers/${mockKeeper.id}`);
+    const req = httpMock.expectOne(`https://fake-api-kappa-eight.vercel.app/keepers/${mockKeeper.id}`);
     expect(req.request.method).toBe('PUT');
     req.flush(mockKeeper);
   });
@@ -98,7 +98,7 @@ describe('KeepersService', () => {
       expect(keepers).toEqual(mockKeepers);
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/keepers');
+    const req = httpMock.expectOne('https://fake-api-kappa-eight.vercel.app/keepers');
     expect(req.request.method).toBe('GET');
     req.flush(mockKeepers);
   });

@@ -49,7 +49,7 @@ describe('TravellersService', () => {
       expect(travellers).toEqual(dummyTravellers);
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/travellers');
+    const req = httpMock.expectOne('https://fake-api-kappa-eight.vercel.app/travellers');
     expect(req.request.method).toBe('GET');
     req.flush(dummyTravellers); // Provide dummy data as the response
   });
