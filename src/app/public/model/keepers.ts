@@ -4,19 +4,23 @@ export class keepers {
   country: string;
   city: string;
   streetAddress: string;
+  email: string;
   description: string;
+  password: string;
   photoUrl: string;
   rating: number;
 
 
-  constructor() {
-    this.id = 0;
-    this.name = '';
-    this.country = '';
-    this.city='';
-    this.streetAddress = '';
-    this.description = '';
-    this.photoUrl = '';
-    this.rating = 0;
+  constructor(id: number = 0, name: string = '', country: string = '', city: string = '', streetAddress: string = '', email: string = '', description: string = '', password: string = '') {
+    this.id = id;
+    this.name = name;
+    this.country = country;
+    this.city = city;
+    this.streetAddress = streetAddress;
+    this.description = description;
+    this.password = password;
+    this.email = email;
+    this.photoUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135768.png";
+    this.rating = 5;
   }
 }

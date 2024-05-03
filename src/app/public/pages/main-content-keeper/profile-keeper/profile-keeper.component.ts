@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from "@angular/router";
 import { UpdateProfileComponent } from "../../update-profile/update-profile.component";
 import { MatDialog } from "@angular/material/dialog";
+import {KeepersService} from "../../../services/keepers.service";
 import { formatDate } from "@angular/common";
 
 @Component({
@@ -9,23 +10,22 @@ import { formatDate } from "@angular/common";
   templateUrl: './profile-keeper.component.html',
   styleUrls: ['./profile-keeper.component.css']
 })
-export class ProfileKeeperComponent {
+export class ProfileKeeperComponent implements OnInit{
   name: string;
-  lastName: string;
-  birthdate: Date;
-  phone: string;
+  country: string;
+  city: string;
+  description: string;
   email: string;
+  photoUrl: string;
+  userId = this.keepersService.userId$;
 
-  constructor(private router: Router, private dialog: MatDialog) {
-    this.name = 'Alejandro';
-    this.lastName = 'Soto';
-    this.birthdate = new Date(2002, 1, 28);
-    this.phone = '959458748';
-    this.email = 'ale12@gmail.com';
-  }
-
-  getFormattedBirthdate(): string {
-    return formatDate(this.birthdate, 'dd-MM-yyyy', 'en-US');
+  constructor(private router: Router, private dialog: MatDialog, private keepersService: KeepersService) {
+    this.name = '';
+    this.country = '';
+    this.city = '';
+    this.description = '';
+    this.email = '';
+    this.photoUrl = '';
   }
 
   goToKeeper() {
@@ -38,23 +38,52 @@ export class ProfileKeeperComponent {
     this.router.navigateByUrl('/messenger-keeper');
   }
 
+  ngOnInit(): void {
+    this.keepersService.userId$.subscribe(userId => {
+      if (userId) {
+        this.loadKeeperDetails(userId);
+      } else {
+        console.log('User ID not available');
+      }
+    });
+  }
+
+  private loadKeeperDetails(userId: string) {
+    this.keepersService.getKeeper(userId).subscribe({
+      next: (result) => {
+        if (result.success) {
+          this.name = result.user.name;
+          this.country = result.user.country;
+          this.city = result.user.city;
+          this.description = result.user.description;
+          this.email = result.user.email;
+          this.photoUrl = result.user.photoUrl;
+        } else {
+          console.log('Error al obtener el usuario');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching keeper details:', err);
+      }
+    });
+  }
+
   goToLogin() {
     this.router.navigateByUrl('/login');
   }
 
   openUpdateDialog(): void {
-    const formattedBirthdate = this.getFormattedBirthdate();
     const dialogRef = this.dialog.open(UpdateProfileComponent, {
       width: '500px',
-      data: { name: this.name, lastName: this.lastName, birthdate: this.birthdate, phone: this.phone, email: this.email }
+      data: { name: this.name, country: this.country, city: this.city, description: this.description, email: this.email }
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.name = result.name;
-        this.lastName = result.lastName;
-        this.birthdate = result.birthdate;
-        this.phone = result.phone;
+        this.country = result.lastName;
+        this.city = result.birthdate;
+        this.description = result.phone;
         this.email = result.email;
       }
     });

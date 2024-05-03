@@ -17,39 +17,29 @@
         <br><br>
         <mat-label style="text-align: left; font-size: 15px">Ingrese la información solicitada</mat-label>
         <br>
-        <mat-label style="text-align: left">Nombres:</mat-label>
         <mat-form-field>
-          <input matInput [(ngModel)]="name" type="text" placeholder="Nombres" class="input">
+          <input matInput [(ngModel)]="name" type="text" placeholder="Nombre" class="input">
         </mat-form-field>
-
-        <mat-label style="text-align: left">Apellidos:</mat-label>
         <mat-form-field>
-          <input matInput [(ngModel)]="lastName" type="text" placeholder="Apellidos" class="input">
+          <input matInput [(ngModel)]="email" type="text" placeholder="Correo" class="input">
         </mat-form-field>
-
-        <mat-label style="text-align:left">Fecha de Nacimiento:</mat-label>
         <mat-form-field>
-          <input matInput [(ngModel)]="birthdate" type="date" class="input">
+          <input matInput [(ngModel)]="country" type="text" placeholder="Pais" class="input">
         </mat-form-field>
-
-        <mat-label style="text-align:left">Teléfono:</mat-label>
         <mat-form-field>
-          <input matInput [(ngModel)]="phone" type="number" placeholder="Teléfono" class="input">
+          <input matInput [(ngModel)]="city" type="text" placeholder="Ciudad" class="input">
         </mat-form-field>
-
-        <mat-label style="text-align:left">Correo:</mat-label>
         <mat-form-field>
-          <input matInput [(ngModel)]="email" type="text" placeholder="Correo electrónico" class="input">
+          <input matInput [(ngModel)]="streetAddress" type="text" placeholder="Direccion" class="input">
         </mat-form-field>
-
-        <mat-label style="text-align:left">Contraseña:</mat-label>
+        <mat-form-field>
+          <input matInput [(ngModel)]="description" type="text" placeholder="Descripcion" class="input">
+        </mat-form-field>
         <mat-form-field>
           <input matInput [(ngModel)]="password" type="password" placeholder="Contraseña" class="input">
         </mat-form-field>
-
-        <mat-label style="text-align:left">Repetir Contraseña:</mat-label>
         <mat-form-field>
-          <input matInput [(ngModel)]="repeat_password" type="password" placeholder="Contraseña" class="input">
+          <input matInput [(ngModel)]="repeat_password" type="password" placeholder="Repetir Contraseña" class="input">
         </mat-form-field>
         <button mat-button style="color: black; background-color: #7cb9e8" class="submit-button" (click)="goToLogin();">Finalizar registro de Keeper</button>
       </div>

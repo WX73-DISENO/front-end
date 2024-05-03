@@ -1,27 +1,29 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateProfileComponent} from "../../update-profile/update-profile.component";
 import {formatDate} from "@angular/common";
+import {TravellersService} from "../../../services/travellers.service";
+import {Travellers} from "../../../model/travellers";
 
 @Component({
   selector: 'app-profile-traveler',
   templateUrl: './profile-traveler.component.html',
   styleUrls: ['./profile-traveler.component.css']
 })
-export class ProfileTravelerComponent {
+export class ProfileTravelerComponent implements OnInit{
   name: string;
   lastName: string;
   birthdate: Date;
   phone: string;
   email: string;
 
-  constructor(private router: Router, private dialog: MatDialog) {
-    this.name = 'Alejandro';
-    this.lastName = 'Soto';
-    this.birthdate = new Date(2002, 1, 28);
-    this.phone = '959458748';
-    this.email = 'ale12@gmail.com';
+  constructor(private router: Router, private dialog: MatDialog, private travellersService: TravellersService) {
+    this.name = '';
+    this.lastName = '';
+    this.birthdate = new Date();
+    this.phone = '';
+    this.email = '';
   }
 
   getFormattedBirthdate(): string {
@@ -44,6 +46,85 @@ export class ProfileTravelerComponent {
     this.router.navigateByUrl('/profile-traveler');
   }
 
+  ngOnInit(): void {
+    this.travellersService.userId$.subscribe(userId => {
+      if (userId) {
+        this.loadTravellerDetails(userId);
+      } else {
+        console.log('User ID not available');
+      }
+    });
+  }
+
+  private loadTravellerDetails(userId: string) {
+    this.travellersService.getTraveller(userId).subscribe({
+      next: (result) => {
+        if (result.success) {
+          this.name = result.user.name;
+          this.lastName = result.user.lastName;
+          this.birthdate = result.user.birthdate;
+          this.phone = result.user.phone;
+          this.email = result.user.email;
+
+        } else {
+          console.log('Error al obtener el usuario');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching keeper details:', err);
+      }
+    });
+  }
+
+  updateProfile(name: string, lastName: string, birthdate: Date, phone: string, email: string): void {
+    this.travellersService.userId$.subscribe(userId => {
+      if (userId) {
+        this.travellersService.getTraveller(userId).subscribe({
+          next: (result) => {
+            if (result.success) {
+
+              if(name === '') {
+                name = result.user.name;
+              }
+              if(lastName === '') {
+                lastName = result.user.lastName;
+              }
+              if(birthdate === null) {
+                birthdate = result.user.birthdate;
+              }
+              if(phone === '') {
+                phone = result.user.phone;
+              }
+              if(email === '') {
+                email = result.user.email;
+              }
+              const traveller = new Travellers(result.user.id, name, lastName, birthdate, phone, email, result.user.password);
+              this.travellersService.updateTraveller(traveller).subscribe({
+                next: (result) => {
+                  if (result) {
+                    console.log('Usuario actualizado');
+                  } else {
+                    console.log('Error al actualizar el usuario');
+                  }
+                },
+                error: (err) => {
+                  console.error('Error updating keeper:', err);
+                }
+              });
+            } else {
+              console.log('Error al obtener el usuario');
+            }
+          },
+          error: (err) => {
+            console.error('Error fetching keeper details:', err);
+          }
+        });
+      } else {
+        console.log('User ID not available');
+      }
+    });
+  }
+
   openUpdateDialog(): void {
     const formattedBirthdate = this.getFormattedBirthdate();
     const dialogRef = this.dialog.open(UpdateProfileComponent, {
@@ -58,6 +139,8 @@ export class ProfileTravelerComponent {
         this.birthdate = result.birthdate;
         this.phone = result.phone;
         this.email = result.email;
+
+        this.updateProfile(result.name, result.lastName, result.birthdate, result.phone, result.email);
       }
     });
   }

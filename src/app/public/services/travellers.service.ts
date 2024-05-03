@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import {BaseService} from "../../shared/base.service";
-import {keepers} from "../model/keepers";
+import {Travellers} from "../model/travellers";
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, map} from "rxjs";
+import {keepers} from "../model/keepers";
+
 @Injectable({
   providedIn: 'root'
 })
-export class KeepersService extends BaseService<keepers>{
+export class TravellersService extends BaseService<Travellers>{
   constructor(http:HttpClient) {
     super(http);
-    this.resourceEndpoint = '/keepers';
+    this.resourceEndpoint = '/travellers';
   }
-
   lastID: any;
 
-  baseUrl = 'http://localhost:3000/keepers';
+  baseUrl = 'http://localhost:3000/travellers';
 
   private userIdSource = new BehaviorSubject<string | null>(null);
 
@@ -39,7 +40,7 @@ export class KeepersService extends BaseService<keepers>{
     this.userIdSource.next(null);
   }
 
-  getKeeper(id: string) {
+  getTraveller(id: string) {
     return this.http.get<any[]>(`${this.baseUrl}?id=${id}`).pipe(
       map(users => {
         if (users.length) {
@@ -51,15 +52,15 @@ export class KeepersService extends BaseService<keepers>{
     );
   }
 
-  registerKeeper(keeper: keepers) {
-    return this.http.post(`${this.baseUrl}`, keeper);
+  registerTraveller(traveller: Travellers) {
+    return this.http.post(`${this.baseUrl}`, traveller);
   }
 
-  getKeepers() {
-    return this.http.get<keepers[]>(`${this.baseUrl}`);
+  getTravellers() {
+    return this.http.get<Travellers[]>(`${this.baseUrl}`);
   }
 
-  updateKeeper(keeper: keepers) {
-    return this.http.put(`${this.baseUrl}/${keeper.id}`, keeper);
+  updateTraveller(travellers: Travellers) {
+    return this.http.put(`${this.baseUrl}/${travellers.id}`, travellers);
   }
 }
