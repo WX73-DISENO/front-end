@@ -61,6 +61,6 @@ export class TravellersService extends BaseService<Travellers>{
   }
 
   updateTraveller(travellers: Travellers) {
-    return this.http.put(`${this.baseUrl}?id=${travellers.id}`, travellers);
+    return this.http.put(`${this.baseUrl}/${travellers.id}`, travellers);
   }
 }
