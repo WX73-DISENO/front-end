@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import {keepers} from "../../model/keepers";
+import {KeepersService} from "../../services/keepers.service";
 
 @Component({
   selector: 'app-signin',
@@ -7,11 +9,12 @@ import {Router} from "@angular/router";
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
+  Keepers: keepers[] = [];
   correo_electronico: any;
   contrasena: any;
   selectedUserType: 'keeper' | 'traveller' | null = null;
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private keepersService: KeepersService){}
   goToRegister(){
     this.router.navigateByUrl('/register-keeper');
   }
@@ -29,8 +32,18 @@ export class SigninComponent {
   }
 
   login(){
-    if(this.selectedUserType == 'keeper'){
-      this.goToKeeper();
+    console.log(this.selectedUserType, this.contrasena, this.correo_electronico);
+    if(this.selectedUserType == 'keeper'){this.keepersService.authenticate(this.correo_electronico, this.contrasena).subscribe({
+      next: (result) => {
+        if (result.success) {
+          console.log('Usuario autenticado', result.user, result.user.id);
+          this.keepersService.setUserId(result.user.id);
+          this.goToKeeper();
+        } else {
+          console.log('Error de autenticación');
+        }
+      }
+    });
     }
     else if(this.selectedUserType == 'traveller')
     {

@@ -11,9 +11,11 @@ export class LoginComponent {
   contrasena: any;
   selectedUserType: 'login' | 'keeper' | 'traveller' = 'login';
 
-  constructor(private router: Router){}
+  constructor(private router: Router ){}
   goToRegister(){
     this.router.navigateByUrl('/register-keeper');
+    this.correo_electronico = '';
+    this.contrasena = '';
   }
 
   goToKeeper(){
