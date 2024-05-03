@@ -385,6 +385,7 @@
       "email": "carlos.gonzalez@example.com",
       "password": "secreto123",
       "photoUrl": "https://i.imgur.com/m0Y7vuI.jpeg"
+
     },
     {
       "id": 4,
@@ -415,6 +416,7 @@
       "email": "qqqq",
       "password": "qqqq",
       "photoUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135768.png"
+
     }
   ]
 }
