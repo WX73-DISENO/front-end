@@ -1,14 +1,16 @@
+import {formatDate} from "@angular/common";
+
 export class Travellers {
   id: number;
   name: string;
   lastName: string;
-  birthdate: string;
+  birthdate: Date;
   phone: string;
   email: string;
   password: string;
   photoUrl: string;
 
-  constructor(id_traveller: number, name: string, lastName: string, birthdate: string, phone: string, email: string, password: string) {
+  constructor(id_traveller: number = 0, name: string = '', lastName: string = '', birthdate: Date = new Date(), phone: string = '', email: string = '', password: string = '') {
     this.id = id_traveller;
     this.name = name;
     this.lastName = lastName;

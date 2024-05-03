@@ -11,7 +11,7 @@ export class keepers {
   rating: number;
 
 
-  constructor(id: number, name: string, country: string, city: string, streetAddress: string, email: string, description: string, password: string) {
+  constructor(id: number = 0, name: string = '', country: string = '', city: string = '', streetAddress: string = '', email: string = '', description: string = '', password: string = '') {
     this.id = id;
     this.name = name;
     this.country = country;
