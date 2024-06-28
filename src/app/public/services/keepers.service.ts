@@ -15,7 +15,7 @@ export class KeepersService extends BaseService<keepers>{
 
   lastID: any;
 
-  baseUrl = 'http://localhost:8080/api/v1/keepers';
+  baseUrl = 'https://romantic-charm-production-923a.up.railway.app/api/v1/keepers';
 
   private userIdSource = new BehaviorSubject<string | null>(null);
 

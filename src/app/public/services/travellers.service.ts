@@ -15,7 +15,7 @@ export class TravellersService extends BaseService<Travellers>{
   }
   lastID: any;
 
-  baseUrl = 'http://localhost:8080/travellers';
+  baseUrl = 'https://romantic-charm-production-923a.up.railway.app/api/v1/travellers';
 
   private userIdSource = new BehaviorSubject<string | null>(null);
 

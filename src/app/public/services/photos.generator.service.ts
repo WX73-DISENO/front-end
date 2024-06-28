@@ -15,7 +15,7 @@ export class PhotosGeneratorService extends BaseService<PhotosResponse> {
     this.resourceEndpoint = '/photos';
   }
 
-  baseUrl = 'http://localhost:8080/api/v1/photos';
+  baseUrl = 'https://romantic-charm-production-923a.up.railway.app/api/v1/photos';
 
   getOriginalPhotoUrls(query: string, perPage: number): Observable<string[]> {
     let params = new HttpParams()
