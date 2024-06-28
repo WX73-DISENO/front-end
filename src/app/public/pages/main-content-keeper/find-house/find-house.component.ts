@@ -2,13 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Casas} from "../../../model/casas";
 import {CasasService} from "../../../services/casas.service";
+import {PhotosGeneratorService} from "../../../services/photos.generator.service";
 @Component({
   selector: 'app-find-house',
   templateUrl: './find-house.component.html',
   styleUrls: ['./find-house.component.css']
 })
-export class FindHouseComponent implements OnInit{
-  Houses:Casas[]=[];
+export class FindHouseComponent implements OnInit {
+  Houses: Casas[] = [];
   pais: string;
   ciudad: string;
   direccion: string;
@@ -16,7 +17,11 @@ export class FindHouseComponent implements OnInit{
   capacidad: number;
   estrellas: number;
 
-  constructor(private router: Router ,private casaService: CasasService){
+  constructor(
+    private router: Router,
+    private casaService: CasasService,
+    private photoService: PhotosGeneratorService
+  ) {
     this.pais = '';
     this.ciudad = '';
     this.direccion = '';
@@ -26,12 +31,26 @@ export class FindHouseComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.casaService.getAll().subscribe((response:any)=>{
-      this.Houses=response
-    })
+    this.casaService.getAll().subscribe((response: any) => {
+      this.Houses = response;
+
+      // Solicitar imágenes adicionales para cada casa
+      this.Houses.forEach(house => {
+        const query = `${house.country} ${house.city}`;
+        this.photoService.getOriginalPhotoUrls(query, 3).subscribe(
+          (urls: string[]) => {
+            house.photos = urls;
+          },
+          error => {
+            console.error('Error al obtener fotos:', error);
+            house.photos = []; // Asegúrate de inicializar el campo photos
+          }
+        );
+      });
+    });
   }
 
-  onFilter(){
+  onFilter() {
     var filteredHouses = [...this.Houses];
     if (this.pais !== '') {
       filteredHouses = filteredHouses.filter(house => house.country.toLowerCase().includes(this.pais.toLowerCase()));
@@ -39,7 +58,7 @@ export class FindHouseComponent implements OnInit{
     if (this.ciudad !== '') {
       filteredHouses = filteredHouses.filter(house => house.city.toLowerCase().includes(this.ciudad.toLowerCase()));
     }
-    if (this.direccion !== ''){
+    if (this.direccion !== '') {
       filteredHouses = filteredHouses.filter(house => house.streetAddress.toLowerCase().includes(this.direccion.toLowerCase()));
     }
     if (this.precio !== 0 && this.precio !== undefined) {
@@ -54,7 +73,8 @@ export class FindHouseComponent implements OnInit{
     }
     this.Houses = filteredHouses;
   }
-  toReset(){
+
+  toReset() {
     this.pais = '';
     this.ciudad = '';
     this.direccion = '';
@@ -66,16 +86,19 @@ export class FindHouseComponent implements OnInit{
     });
   }
 
-  goToKeeper(){
+  goToKeeper() {
     this.router.navigateByUrl('/home-keeper');
   }
-  goToMessenger(){
+
+  goToMessenger() {
     this.router.navigateByUrl('/messenger-keeper');
   }
-  goToProfile(){
+
+  goToProfile() {
     this.router.navigateByUrl('/profile-keeper');
   }
-  goToLogin(){
+
+  goToLogin() {
     this.router.navigateByUrl('/login');
   }
 }

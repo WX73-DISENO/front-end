@@ -15,7 +15,7 @@ export class TravellersService extends BaseService<Travellers>{
   }
   lastID: any;
 
-  baseUrl = 'http://localhost:3000/travellers';
+  baseUrl = 'http://localhost:8080/travellers';
 
   private userIdSource = new BehaviorSubject<string | null>(null);
 

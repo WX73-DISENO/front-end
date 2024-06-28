@@ -214,3 +214,13 @@
   background-color: orange;
 }
 
+.viaje-additional-image {
+  max-width: 150px;
+  max-height: 150px;
+  margin: 5px;
+}
+
+.viaje-image {
+  max-width: 100%;
+  height: auto;
+}

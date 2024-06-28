@@ -3,6 +3,7 @@ import {BaseService} from "../../shared/base.service";
 import {keepers} from "../model/keepers";
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, map} from "rxjs";
+import {KeepersResponse} from "../model/keepers.response";
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,7 @@ export class KeepersService extends BaseService<keepers>{
 
   lastID: any;
 
-  baseUrl = 'http://localhost:3000/keepers';
+  baseUrl = 'http://localhost:8080/api/v1/keepers';
 
   private userIdSource = new BehaviorSubject<string | null>(null);
 
@@ -59,7 +60,7 @@ export class KeepersService extends BaseService<keepers>{
     return this.http.get<keepers[]>(`${this.baseUrl}`);
   }
 
-  updateKeeper(keeper: keepers) {
-    return this.http.put(`${this.baseUrl}/${keeper.id}`, keeper);
+  updateKeeper(keeperResponse: KeepersResponse) {
+    return this.http.put(`${this.baseUrl}/${keeperResponse.id}`, keeperResponse);
   }
 }

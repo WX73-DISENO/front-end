@@ -37,7 +37,7 @@ export class RegisterKeeperComponent {
         this.id = user.length + 1;
         console.log('ID obtenido', this.id);
         // Crear el keeper y registrar después de obtener el ID
-        const keeper = new keepers(this.id, this.name, this.country, this.city, this.streetAddress, this.email, this.description, this.password);
+        const keeper = new keepers(this.password , this.name, this.country, this.city, this.streetAddress, this.email, this.description);
         this.registerKeepers(keeper);
       },
       error: (error) => {
@@ -47,6 +47,7 @@ export class RegisterKeeperComponent {
   }
 
   registerKeepers(keeper: keepers): void {
+    console.log('Keeper a registrar', keeper);
     this.keepersService.registerKeeper(keeper).subscribe({
       next: (user) => {
         console.log('Usuario registrado', user);

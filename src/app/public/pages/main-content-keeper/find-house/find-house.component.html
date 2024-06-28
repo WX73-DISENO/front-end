@@ -4,7 +4,7 @@
     <a class="button-menu" mat-button (click)="goToKeeper()">INICIO</a>
     <a class="button-menu" mat-button>BUSCAR CASAS</a>
     <a class="button-menu" mat-button (click)="goToMessenger();">MENSAJERIA</a>
-    <a class="button-menu" mat-button (click)="goToProfile();"><img src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png" style="width: 3em;" ></a>
+    <a class="button-menu" mat-button (click)="goToProfile();"><img src="https://i.postimg.cc/Fs9Z3g3V/usuario-1.png" style="width: 3em;"></a>
   </div>
 </mat-toolbar>
 
@@ -67,7 +67,7 @@
 </div>
 
 <div class="examples-cards">
-  <div *ngFor="let house of Houses">
+  <div *ngFor="let house of Houses" class="house-card-container">
     <mat-card class="example-data">
       <mat-card-content>
         <img [src]="house.photoUrl" alt="Image of the house" width="280px"><br>
@@ -75,6 +75,14 @@
         <label>{{house.price}}</label><br>
         <label>Capacidad máxima de {{house.capacity}} personas</label><br>
         <label>{{house.rating}} estrellas</label>
+        <div *ngIf="house.photos.length">
+          <h3>Fotos adicionales:</h3>
+          <div class="additional-photos">
+            <div *ngFor="let photo of house.photos" class="additional-photo">
+              <img [src]="photo" alt="Photo of {{ house.country }} {{ house.city }}" class="house-additional-image">
+            </div>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

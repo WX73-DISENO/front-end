@@ -1,4 +1,5 @@
-export class keepers {
+export class KeepersResponse {
+  id: number;
   password: string;
   name: string;
   country: string;
@@ -9,7 +10,9 @@ export class keepers {
   photoUrl: string;
   rating: number;
 
-  constructor(name: string = '', country: string = '', city: string = '', streetAddress: string = '', email: string = '', description: string = '', password: string = '') {
+
+  constructor(id: number = 0, name: string = '', country: string = '', city: string = '', streetAddress: string = '', email: string = '', description: string = '', password: string = '') {
+    this.id = id;
     this.password = password;
     this.name = name;
     this.country = country;
